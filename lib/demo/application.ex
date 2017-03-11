@@ -22,7 +22,20 @@ defmodule Demo.Application do
   end
 
   # Start cowboy
+  # ref: https://ninenines.eu/docs/en/cowboy/2.0/manual/cowboy_router.compile/
+  # ref: https://ninenines.eu/docs/en/cowboy/2.0/manual/cowboy.start_clear/
+  #
   def start_cowboy do
-    # TODO Define Routing, Set Handler, Start cowboy
+    routes = [
+      {"/", Demo.HelloHandler, []}
+    ]
+    dispatch = :cowboy_router.compile([{:_, routes}])
+    opts = [{:port, 4000}]
+    env = %{dispatch: dispatch}
+    {:ok, _pid} = :cowboy.start_clear(
+                    :http,       # Listener name
+                    10,          # Number of process
+                    opts,        # Transport options (port number etc...)
+                    %{env: env})
   end
 end
