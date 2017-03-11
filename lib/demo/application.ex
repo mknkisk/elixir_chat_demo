@@ -27,8 +27,10 @@ defmodule Demo.Application do
   # ref: https://ninenines.eu/docs/en/cowboy/2.0/manual/cowboy_static/
   #
   def start_cowboy do
+    # Routing
     routes = [
       {"/", Demo.HelloHandler, []},
+      {"/greet/:name", Demo.GreetHandler, []},
       {"/static/[...]", :cowboy_static, {:priv_dir, :demo, "static_files"}}
     ]
     dispatch = :cowboy_router.compile([{:_, routes}])
