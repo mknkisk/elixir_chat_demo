@@ -32,6 +32,7 @@ defmodule Demo.Application do
     routes = [
       {"/", Demo.HelloHandler, []},
       {"/greet/:name", Demo.GreetHandler, []},
+      {"/websocket", Demo.WebSocketHandler, []},
       {"/static/[...]", :cowboy_static, {:priv_dir, :demo, "static_files"}}
     ]
     dispatch = :cowboy_router.compile([{:_, routes}])
